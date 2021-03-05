@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(process.env.MONGO_URI, {
+  mongoose.connect('mongodb://localhost/:5007', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
