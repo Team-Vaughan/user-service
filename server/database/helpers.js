@@ -42,9 +42,19 @@ const getUserSuperhostStatus = async (userId) => {
   }
 };
 
+const updateUserInfo = (id, object) => {
+  const { name, bio, avatarUrl, isSuperhost, identityVerified, languages, responseRate, responseTime } = object;
+  let options = {new: true, upsert: true, useFindAndModify: false};
+  User.findOneAndUpdate({ userId: id }, { name, bio, avatarUrl, isSuperhost, identityVerified, languages, responseRate, responseTime }, options)
+    .then(result => result)
+    .catch(error => console.log(error))
+}
+
+
 module.exports = {
   generatePhoto,
   getUserById,
   getUserNameAndPhoto,
-  getUserSuperhostStatus
+  getUserSuperhostStatus,
+  updateUserInfo
 };
