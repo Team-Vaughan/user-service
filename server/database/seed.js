@@ -57,3 +57,4 @@ const seedManyUsers = (start, number) => {
 };
 
 seedManyUsers(200, 10000);
+

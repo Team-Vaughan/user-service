@@ -43,8 +43,21 @@ app.put('/users/:userId', async (req, res) => {
     await updateUserInfo(id, incomingObject)
     res.sendStatus(200);
   } catch(err) {
-    console.log(err);
+    console.log('error updating user', err);
+    res.status(500).send({ message: 'Server Error' });
   }
-})
+});
+
+// app.post('/users/:userId', async (req, res) => {
+//   let id = req.params.userId;
+//   let newUser = req.body;
+//   try {
+//     await createUser(id, incomingObject)
+//     res.sendStatus(200);
+//   } catch(err) {
+//     console.log('error creating a new user', err);
+//     res.status(500).send({ message: 'Server Error' });
+//   }
+// })
 
 module.exports = app;

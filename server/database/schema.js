@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'test') {
 const userSchema = new mongoose.Schema({
   userId: Number,
   name: String,
-  joinDate: String,
+  joinDate: {type: Date, default: Date.now},
   bio: String,
   avatarUrl: String,
   isSuperhost: Boolean,
