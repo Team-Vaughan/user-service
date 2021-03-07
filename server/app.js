@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, updateUserInfo } = require('./database/helpers');
+const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, updateUserInfo, deleteById } = require('./database/helpers');
 
 app.use(express.static('public'));
 app.use('/rooms/:id', express.static('public'));
@@ -48,16 +48,15 @@ app.put('/users/:userId', async (req, res) => {
   }
 });
 
-// app.post('/users/:userId', async (req, res) => {
-//   let id = req.params.userId;
-//   let newUser = req.body;
-//   try {
-//     await createUser(id, incomingObject)
-//     res.sendStatus(200);
-//   } catch(err) {
-//     console.log('error creating a new user', err);
-//     res.status(500).send({ message: 'Server Error' });
-//   }
-// })
+app.delete('/users/:userId', async (req, res) => {
+  let id = req.params.userId;
+  try {
+    await deleteById(id)
+    res.sendStatus(200);
+  } catch(err) {
+    console.log('error deleting user', err);
+    res.status(500).send({ message: 'Server Error' });
+  }
+});
 
 module.exports = app;

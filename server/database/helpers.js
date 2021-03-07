@@ -57,11 +57,17 @@ const updateUserInfo = (id, params) => {
     .catch(error => console.log(error))
 }
 
+const deleteById = (id) => {
+  User.deleteOne({userId: id})
+    .then(result => result)
+    .catch(error => console.log(error))
+}
 
 module.exports = {
   generatePhoto,
   getUserById,
   getUserNameAndPhoto,
   getUserSuperhostStatus,
-  updateUserInfo
+  updateUserInfo,
+  deleteById
 };
