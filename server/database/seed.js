@@ -1,21 +1,39 @@
 require('dotenv').config();
 const { generatePhoto } = require('./helpers');
 const faker = require('faker');
-const AWS = require('./aws.js');
+const { AWS, S3 } = require('./aws.js');
 const { mongoose, User } = require('./schema.js');
 
 const languages = ['English', 'Spanish', 'French', 'Portuguese', 'German', 'Italian', 'Cambodian', 'Thai', 'Shyriiwook'];
 
+let params = { Bucket: 'userservicebucket' };
+
+let listAllKeys = S3.listObjectsV2(params).promise();
+
+const getImgKeys = () => {
+  return new Promise((resolve, reject) => {
+    listAllKeys
+      .then(({Contents}) => {
+          let allKeys = Contents.map(({Key}) => Key)
+          // console.log(allKeys[0])
+          resolve(allKeys[faker.random.number({ min: 0, max: 999 })]);
+        })
+      .catch(err => {
+        console.log(err)
+        reject(err);
+      })
+  })
+}
+
 const seedUser = async (id) => {
   try {
-    const photo = await generatePhoto();
-    const S3Url = await AWS.uploadPhotoToS3(photo);
+    const S3Url = await getImgKeys();
     const user = new User({
       userId: id,
       name: faker.name.firstName(),
       joinDate: faker.date.past(),
       bio: faker.lorem.sentences(),
-      avatarUrl: S3Url,
+      avatarUrl: `https://userservicebucket.s3.us-east-2.amazonaws.com/${S3Url}`,
       isSuperhost: faker.random.boolean(),
       identityVerified: faker.random.boolean(),
       languages: faker.random.arrayElements(languages, faker.random.number({ min: 0, max: 3 })),
@@ -56,5 +74,5 @@ const seedManyUsers = (start, number) => {
     .catch(() => console.error('Batch unsuccessful'));
 };
 
-seedManyUsers(200, 10000);
+seedManyUsers(10206, 10);
 

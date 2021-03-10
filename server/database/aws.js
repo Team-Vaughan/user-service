@@ -30,5 +30,6 @@ const uploadPhotoToS3 = (photo) => {
 
 module.exports = {
   S3,
-  uploadPhotoToS3
+  uploadPhotoToS3,
+  AWS
 };
