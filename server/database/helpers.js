@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { User } = require('./schema.js');
+const { mongoose, User } = require('./schema.js');
 
 const generatePhoto = async () => {
   try {
@@ -42,9 +42,32 @@ const getUserSuperhostStatus = async (userId) => {
   }
 };
 
+//update if ID exists already, insert if not - create and update together
+const updateUserInfo = (id, params) => {
+  const { name, bio, avatarUrl, isSuperhost, identityVerified, languages, responseRate, responseTime } = params;
+  //if any of the params is a falsy value
+  for(let prop in params) {
+    if(!params[prop]) {
+      delete params[prop];
+    }
+  }
+  let options = {new: true, upsert: true, useFindAndModify: false};
+  User.findOneAndUpdate({ userId: id }, params , options)
+    .then(result => result)
+    .catch(error => console.log(error))
+}
+
+const deleteById = (id) => {
+  User.deleteOne({userId: id})
+    .then(result => result)
+    .catch(error => console.log(error))
+}
+
 module.exports = {
   generatePhoto,
   getUserById,
   getUserNameAndPhoto,
-  getUserSuperhostStatus
+  getUserSuperhostStatus,
+  updateUserInfo,
+  deleteById
 };

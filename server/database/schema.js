@@ -2,7 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect('mongodb://localhost/:5007', {
+  mongoose.connect('mongodb://localhost/Users', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'test') {
 const userSchema = new mongoose.Schema({
   userId: Number,
   name: String,
-  joinDate: String,
+  joinDate: {type: Date, default: Date.now},
   bio: String,
   avatarUrl: String,
   isSuperhost: Boolean,
