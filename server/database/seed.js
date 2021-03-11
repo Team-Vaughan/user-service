@@ -15,7 +15,6 @@ const getImgKeys = () => {
     listAllKeys
       .then(({Contents}) => {
           let allKeys = Contents.map(({Key}) => Key)
-          // console.log(allKeys[0])
           resolve(allKeys[faker.random.number({ min: 0, max: 999 })]);
         })
       .catch(err => {
