@@ -73,5 +73,7 @@ const seedManyUsers = (start, number) => {
     .catch(() => console.error('Batch unsuccessful'));
 };
 
-seedManyUsers(10206, 10);
+seedManyUsers(10216, 1);
+
+
 
