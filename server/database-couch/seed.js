@@ -15,7 +15,7 @@ const seedManyUsers = async (start, number) => {
   // batchSize determines how many users get created simultaneously
   // Use batchSize to not overload image service with too many requests at once
   // Batches of 100+ requests known to cause socket error
-  let batchSize = 50;
+  let batchSize = 100;
 
   while (number > 0 && batchSize > 0) {
     ids.push(start);
@@ -31,6 +31,7 @@ const seedManyUsers = async (start, number) => {
         return allKeys
       })
       .then(async S3Url => {
+
         const multipleUsers =  await Promise.all(ids.map(async id => {
           const userData = {
             userId: id,
@@ -46,6 +47,7 @@ const seedManyUsers = async (start, number) => {
           };
           return userData;
         }))
+
         const response = await user.bulk({ docs: multipleUsers });
         console.log('Batch complete!');
         if(number > 0) {
@@ -61,4 +63,4 @@ const seedManyUsers = async (start, number) => {
   })
 };
 
-seedManyUsers(0, 1000000);
+seedManyUsers(1000002, 1);
