@@ -12,7 +12,7 @@
     "build": "NODE_ENV=production webpack",
     "client-dev": "NODE_ENV=development webpack -w",
     "test": "jest",
-    "seed": "node server/database/seed.js"
+    "seed": "node server/database-couch/seed.js"
   },
   "dependencies": {
     "aws-sdk": "^2.828.0",
