@@ -45,7 +45,7 @@ GET
 Endpoint: http://localhost:5007/users/:userId
 
 Returns a JSON object with user info. For example:
-{"languages":["doggo","duck","chicken"],"_id":"60443ea4ad8703830eeff43d","userId":10201,"__v":0,"avatarUrl":"https://images.app.goo.gl/dJzfRGB8Fz4DS7or9","bio":"I am the cutest little doggo ever.","identityVerified":false,"isSuperhost":false,"joinDate":"2021-03-07T02:49:28.287Z","name":"LucyFur","responseRate":10,"responseTime":"within a month"}
+```{"languages":["doggo","duck","chicken"],"_id":"60443ea4ad8703830eeff43d","userId":10201,"__v":0,"avatarUrl":"https://images.app.goo.gl/dJzfRGB8Fz4DS7or9","bio":"I am the cutest little doggo ever.","identityVerified":false,"isSuperhost":false,"joinDate":"2021-03-07T02:49:28.287Z","name":"LucyFur","responseRate":10,"responseTime":"within a month"}```
 
 
 PUT
