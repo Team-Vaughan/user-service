@@ -10,19 +10,19 @@ let params = { Bucket: 'userservicebucket' };
 
 let listAllKeys = S3.listObjectsV2(params).promise();
 
-const getImgKeys = () => {
-  return new Promise((resolve, reject) => {
-    listAllKeys
-      .then(({ Contents }) => {
-        let allKeys = Contents.map(({ Key }) => Key)
-        resolve(allKeys[faker.random.number({ min: 0, max: 999 })]);
-      })
-      .catch(err => {
-        console.log(err)
-        reject(err);
-      })
-  })
-};
+// const getImgKeys = () => {
+//   return new Promise((resolve, reject) => {
+//     listAllKeys
+//       .then(({ Contents }) => {
+//         let allKeys = Contents.map(({ Key }) => `https://userservicebucket.s3.us-east-2.amazonaws.com/${Key}`)
+//         resolve(allKeys[faker.random.number({ min: 0, max: 999 })]);
+//       })
+//       .catch(err => {
+//         console.log(err)
+//         reject(err);
+//       })
+//   })
+// };
 
 const seedManyUsers = async (start, number) => {
   const user = await createCouch();
@@ -38,24 +38,37 @@ const seedManyUsers = async (start, number) => {
     number--;
     batchSize--;
   }
-  const multipleUsers =  await Promise.all(ids.map(async id => {
-    const S3Url = await getImgKeys();
-    const userData = {
-      userId: id,
-      name: faker.name.firstName(),
-      joinDate: faker.date.past(),
-      bio: faker.lorem.sentences(),
-      avatarUrl: `https://userservicebucket.s3.us-east-2.amazonaws.com/${S3Url}`,
-      isSuperhost: faker.random.boolean(),
-      identityVerified: faker.random.boolean(),
-      languages: faker.random.arrayElements(languages, faker.random.number({ min: 1, max: 3 })),
-      responseRate: faker.random.number({ min: 93, max: 100 }),
-      responseTime: 'within an hour'
-    };
-    return userData;
-  }))
-  const response = await user.bulk({ docs: multipleUsers });
-  console.log('seeding is done!');
+  return new Promise(async (resolve, reject) => {
+    await listAllKeys
+      .then(({ Contents }) => {
+        let allKeys = Contents.map(({ Key }) => `https://userservicebucket.s3.us-east-2.amazonaws.com/${Key}`)
+        resolve(allKeys);
+        return allKeys
+      })
+      .then(async S3Url => {
+        const multipleUsers =  await Promise.all(ids.map(async id => {
+          const userData = {
+            userId: id,
+            name: faker.name.firstName(),
+            joinDate: faker.date.past(),
+            bio: faker.lorem.sentences(),
+            avatarUrl: S3Url[faker.random.number({ min: 0, max: 999 })],
+            isSuperhost: faker.random.boolean(),
+            identityVerified: faker.random.boolean(),
+            languages: faker.random.arrayElements(languages, faker.random.number({ min: 1, max: 3 })),
+            responseRate: faker.random.number({ min: 93, max: 100 }),
+            responseTime: 'within an hour'
+          };
+          return userData;
+        }))
+        const response = await user.bulk({ docs: multipleUsers });
+        console.log('seeding complete')
+      })
+      .catch(err => {
+        console.log(err)
+        reject(err);
+      })
+  })
 };
 
-seedManyUsers(0, 50000);
+seedManyUsers(0, 1);
