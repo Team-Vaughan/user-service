@@ -27,7 +27,4 @@ const getImgKeys = async () => {
   })
 }
 
-
-
-
 module.exports = { S3, AWS, getImgKeys };

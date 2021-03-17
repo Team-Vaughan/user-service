@@ -7,7 +7,7 @@ const { createCouch } = require('./schema.js');
 const languages = ['English', 'Spanish', 'French', 'Portuguese', 'German', 'Italian', 'Cambodian', 'Thai', 'Shyriiwook'];
 
 const seed = async (start, number) => {
-  const user2 = await createCouch();
+  const user3 = await createCouch();
   const S3Url = await getImgKeys();
 
   const seedManyUsers = async (start, number) => {
@@ -41,7 +41,7 @@ const seed = async (start, number) => {
       return userData;
     }))
 
-    const response = await user2.bulk({ docs: multipleUsers });
+    const response = await user3.bulk({ docs: multipleUsers });
     console.log('Batch complete!');
     if (number > 0) {
       seedManyUsers(start, number);
@@ -49,7 +49,7 @@ const seed = async (start, number) => {
       console.log('seeding complete')
     }
   };
-  seedManyUsers(0, 10000000);
+  seedManyUsers(11, 1000);
 }
 
 seed();
