@@ -9,7 +9,7 @@ const viewUrl = '_design/allUsers/_view/allUsers';
 const getUserById = async () => {
   try{
     const body = await users3.view('allUsers', 'allUsers');
-    const test = body.rows.slice(0,5);
+    const test = body.rows.slice(0,2);
 
     test.forEach(doc => {
       console.log(doc.key)
