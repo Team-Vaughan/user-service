@@ -80,18 +80,22 @@ const formatData = (userData, languageData) => {
 //     .catch(error => console.log(error))
 // }
 
-// const deleteById = (id) => {
-//   User.deleteOne({userId: id})
-//     .then(result => result)
-//     .catch(error => console.log(error))
-// }
+const deleteUserById = (id) => {
+  User.destroy({ where: { userId: id }})
+    .then(result => result)
+    .catch(error => console.log(error))
+  UserLanguage.destroy({ where: { userUserId: id} })
+    .then(result => result)
+    .catch(error => console.log(error))
+}
 
 module.exports = {
   getUserById,
   getUserNameAndPhoto,
   getUserSuperhostStatus,
   getUserLanguagesByUserId,
-  formatData
+  formatData,
+  deleteUserById
   // updateUserInfo,
-  // deleteById
+
 };
