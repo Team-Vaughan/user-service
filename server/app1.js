@@ -1,6 +1,8 @@
 const express = require('express');
 const app1 = express();
 const cors = require('cors');
+const dbname = 'users3';
+const viewUrl = '_design/allUsers/_view/allUsers';
 
 app1.use(express.static('public'));
 app1.use('/rooms/:id', express.static('public'));

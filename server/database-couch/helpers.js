@@ -1,15 +1,26 @@
 const axios = require('axios');
-const db = require('./schema.js');
+const nano = require('nano')('http://admin:123456@localhost:5984');
+const users3 = nano.use('users3');
 
-// const getUserById = async (userId) => {
-//   try {
-//     const user = await User.findOne({ userId });
-//     return user;
-//   } catch (err) {
-//     console.error(err);
-//     return null;
-//   }
-// };
+const dbname = 'users3';
+const viewUrl = '_design/allUsers/_view/allUsers';
+
+
+const getUserById = async () => {
+  try{
+    const body = await users3.view('allUsers', 'allUsers');
+    const test = body.rows.slice(0,5);
+
+    test.forEach(doc => {
+      console.log(doc.key)
+    })
+  } catch(err) {
+    console.log('the error 👎🏽', err)
+  }
+};
+
+
+getUserById();
 
 // const getUserNameAndPhoto = async (userId) => {
 //   try {
