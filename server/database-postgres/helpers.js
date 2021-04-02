@@ -47,6 +47,24 @@ const getUserSuperhostStatus = async (userId) => {
   }
 };
 
+const formatData = (userData, languageData) => {
+  let formatted = userData;
+  const {
+    userId,
+    name,
+    bio,
+    joinDate,
+    avatarUrl,
+    isSuperhost,
+    identityVerified,
+    responseRate,
+    responseTime
+  } = formatted
+
+  formatted.dataValues.languages = languageData;
+  return formatted;
+}
+
 //update if ID exists already, insert if not - create and update together
 // const updateUserInfo = (id, params) => {
 //   const { name, bio, avatarUrl, isSuperhost, identityVerified, languages, responseRate, responseTime } = params;
@@ -73,6 +91,7 @@ module.exports = {
   getUserNameAndPhoto,
   getUserSuperhostStatus,
   getUserLanguagesByUserId,
+  formatData
   // updateUserInfo,
   // deleteById
 };
