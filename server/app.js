@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, updateUserInfo, deleteById } = require('./database/helpers');
+const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, getUserLanguagesByUserId } = require('./database-postgres/helpers');
 
 app.use(express.static('public'));
 app.use('/rooms/:id', express.static('public'));
@@ -11,8 +11,11 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/users/:userId', async (req, res) => {
   try {
-    const user = await getUserById(req.params.userId);
+    const user = await getUserById(req.params.userId)
+    const languages = await getUserLanguagesByUserId(req.params.userId)
+
     user ? res.status(200).send(user) : res.sendStatus(404);
+    // user ? res.status(200).send(user) : res.sendStatus(404);
   } catch (err) {
     res.status(500).send({ message: 'Server Error' });
   }

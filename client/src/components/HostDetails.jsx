@@ -17,8 +17,8 @@ const JoinedText = styled.div`
 `;
 
 const HostDetails = ({ name, date }) => {
-  const month = months[date.split(' ')[1]];
-  const year = date.split(' ')[3];
+  const month = months[date.split('-')[1]];
+  const year = date.split('-')[0];
   return (
     <div>
       <HostName>Hosted by { name }</HostName>

@@ -104,5 +104,6 @@ seed()
 // AND users."userId" = 9999999;
 
 
-
+//create unique index index_users on users ("userId");
+//create index index_ul on user_languages ("userUserId");
 

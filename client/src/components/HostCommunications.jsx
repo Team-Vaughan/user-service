@@ -13,7 +13,6 @@ const HostCommunicationsContainer = styled.div`
 `;
 
 const HostCommunications = ({ languages = [], responseRate, responseTime }) => {
-
   const languagesArrayToString = (array) => {
     let languageList;
     if (languages) {
