@@ -80,6 +80,16 @@ const formatData = (userData, languageData) => {
 //     .catch(error => console.log(error))
 // }
 
+//update or create
+//gets an object from user
+//split into 2 -> user and language
+//check if userId exist,
+  //if exists, then update user & language
+// else
+  //create a new user
+    //check if language exist,
+      //if not create a new language
+
 const deleteUserById = (id) => {
   User.destroy({ where: { userId: id }})
     .then(result => result)
