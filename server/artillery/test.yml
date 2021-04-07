@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:5007"
+  phases:
+    - duration: 20
+      arrivalRate: 10
+  payload:
+    path: "userId.csv"
+    fields:
+      - "userId"
+scenarios:
+  -
+    name: "user info for the GET APIs"
+    flow:
+    -
+      get:
+        url: "/users/{{userId}}"
+    -
+      get:
+        url: "/users/{{userId}}/id"
+    -
+      get:
+        url: "/users/{{userId}}/super"
+
+
