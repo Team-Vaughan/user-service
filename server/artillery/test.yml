@@ -1,8 +1,8 @@
 config:
   target: "http://localhost:5007"
   phases:
-    - duration: 20
-      arrivalRate: 10
+    - duration: 60
+      arrivalRate: 300
   payload:
     path: "userId.csv"
     fields:
@@ -14,11 +14,11 @@ scenarios:
     -
       get:
         url: "/users/{{userId}}"
-    -
-      get:
-        url: "/users/{{userId}}/id"
-    -
-      get:
-        url: "/users/{{userId}}/super"
+    # -
+    #   get:
+    #     url: "/users/{{userId}}/id"
+    # -
+    #   get:
+    #     url: "/users/{{userId}}/super"
 
 
