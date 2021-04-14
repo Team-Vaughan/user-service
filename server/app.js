@@ -1,7 +1,11 @@
 const express = require('express');
+const redis = require('redis');
 const app = express();
 const cors = require('cors');
 const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, getUserLanguagesByUserId, formatData, deleteUserById } = require('./database-postgres/helpers');
+
+const REDIS_PORT = 6379;
+const client = redis.createClient(REDIS_PORT);
 
 app.use(express.static('public'));
 app.use('/rooms/:id', express.static('public'));
@@ -10,11 +14,21 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.get('/users/:userId', async (req, res) => {
+  let { userId } = req.params;
   try {
-    const userInfo = await getUserById(req.params.userId)
-    const languageInfo = await getUserLanguagesByUserId(req.params.userId);
-    let user = formatData(userInfo, languageInfo);
-    user ? res.status(200).send(user) : res.sendStatus(404);
+    client.get(userId, async(err, data) => {
+      if(err) throw err;
+
+      if(data) {
+        res.status(200).send(data);
+      } else {
+        const userInfo = await getUserById(userId)
+        const languageInfo = await getUserLanguagesByUserId(userId);
+        let user = await formatData(userInfo, languageInfo);
+        client.setex(userId, 36000, JSON.stringify(user));
+        res.status(200).send(user);
+      }
+    });
   } catch (err) {
     res.status(500).send({ message: 'Server Error' });
   }
