@@ -18,6 +18,7 @@ const HostIdContainer = styled.div`
 `;
 
 const HostId = ({ host }) => {
+
   return (
     <HostIdContainer>
       <HostDetails name={host.name} date={host.joinDate}/>
