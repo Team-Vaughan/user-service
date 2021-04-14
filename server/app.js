@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, getUserLanguagesByUserId, formatData } = require('./database-postgres/helpers');
+const { getUserById, getUserNameAndPhoto, getUserSuperhostStatus, getUserLanguagesByUserId, formatData, deleteUserById } = require('./database-postgres/helpers');
 
 app.use(express.static('public'));
 app.use('/rooms/:id', express.static('public'));
@@ -53,7 +53,7 @@ app.put('/users/:userId', async (req, res) => {
 app.delete('/users/:userId', async (req, res) => {
   let id = req.params.userId;
   try {
-    await deleteById(id)
+    await deleteUserById(id)
     res.sendStatus(200);
   } catch(err) {
     console.log('error deleting user', err);
