@@ -80,6 +80,7 @@ const seed = async () => {
 
   try {
     await usersSeeded(10000000, 10000);
+    await usersSeeded(100, 10000);
     console.log('1');
     await seedLanguage();
     console.log('2');
