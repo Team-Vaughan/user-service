@@ -6,6 +6,7 @@ const S3 = new AWS.S3({
   apiVersion: 'latest',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  aws-sdk: process.env.AWS_SDK_LOAD_CONFIG = true
 });
 
 let params = { Bucket: 'userservicebucket' };
