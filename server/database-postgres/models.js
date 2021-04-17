@@ -3,11 +3,8 @@ const { DataTypes } = require('sequelize');
 
 require('dotenv').config();
 
-const db = new Sequelize({
+const db = new Sequelize('users', process.env.DB_USERNAME, process.env.DB_PASSWORD,{
   dialect: 'postgres',
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
   host: process.env.DB_HOST,
   logging: false
