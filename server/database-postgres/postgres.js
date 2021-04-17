@@ -79,8 +79,8 @@ const seed = async () => {
   }
 
   try {
-    // await usersSeeded(10000000, 10000);
-    await usersSeeded(100, 10000);
+    await usersSeeded(10000000, 10000);
+    // await usersSeeded(100, 10000);
     console.log('1');
     await seedLanguage();
     console.log('2');
@@ -107,4 +107,5 @@ seed()
 
 //create unique index index_users on users ("userId");
 //create index index_ul on user_languages ("userUserId");
+// SELECT pg_size_pretty( pg_database_size('<db name>') );
 
