@@ -74,7 +74,7 @@ UserLanguage.belongsTo(User);
 UserLanguage.belongsTo(Language);
 
 const sync = () => {
-  return db.sync({ force: true });
+  return db.sync();
 }
 
 module.exports = {
